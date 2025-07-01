@@ -14,16 +14,95 @@
 		<link
 			href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap"
 			rel="stylesheet" />
+		<script
+			src="https://kit.fontawesome.com/52ee440e45.js"
+			crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="./css/style.css" />
 		<title>Frontend Mentor | Character counter</title>
 	</head>
-	<body class="theme-light">
-		<div class="heading">
+	<body class="theme-dark">
+		<div class="header">
 			<div class="logo"></div>
 			<button class="switch-btn">
-				<img class="switch-icon icon-sun" src="./img/icon-sun.svg" alt="Color theme switch icon"></img>
-				<img class="switch-icon icon-moon" src="./img/icon-moon.svg" alt="Color theme switch icon"></img>
+				<img
+					class="switch-icon icon-sun"
+					src="./img/icon-sun.svg"
+					alt="Color theme switch icon" />
+				<img
+					class="switch-icon icon-moon"
+					src="./img/icon-moon.svg"
+					alt="Color theme switch icon" />
 			</button>
+		</div>
+
+		<h1 class="title">Analyze your text in real-time.</h1>
+		<div class="main">
+			<textarea class="text-input"></textarea>
+			<div class="options">
+				<div class="option">
+					<input id="exclude-spaces" type="checkbox" />
+					<label for="exclude-spaces">Exclude Spaces</label>
+				</div>
+				<div class="option">
+					<input id="char-limit" type="checkbox" />
+					<label for="char-limit">Set Character Limit</label>
+				</div>
+				<div class="reading">
+					Approx. reading time <span class="reading-time"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="stats">
+			<div class="stat-boxes">
+				<div class="stat total">
+					<p class="stat-value">XXX</p>
+					<p clas="stat-title">Total Characters</p>
+					<img class="stat-icon" src="./img/pattern-character-count.svg"">
+				</div>
+				<div class="stat word-count">
+					<p class="stat-value">XXX</p>
+					<p clas="stat-title">Word Count</p>
+					<img class="stat-icon" src="./img/pattern-word-count.svg"">
+				</div>
+				<div class="stat sentence-count">
+					<p class="stat-value">XXX</p>
+					<p clas="stat-title">Sentence Count</p>
+					<img class="stat-icon" src="./img/pattern-sentence-count.svg"">
+				</div>
+			</div>
+			<div class="stat-letters">
+				<p class="stat-title">Letter Density</p>
+				<ul class="letter-list">
+					<li class="letter-box">
+						<p class="letter">E</p>
+						<div class="bar">
+							<div class="bar-result"></div>
+						</div>
+						<p class="amount">XX (XX.XX%)</p>
+					</li>
+					<li class="letter-box">
+						<p class="letter">F</p>
+						<div class="bar">
+							<div class="bar-result"></div>
+						</div>
+						<p class="amount">XX (XX.XX%)</p>
+					</li>
+					<li class="letter-box">
+						<p class="letter">G</p>
+						<div class="bar">
+							<div class="bar-result" style="width: 50%"></div>
+						</div>
+						<p class="amount">X (X.XX%)</p>
+					</li>
+				</ul>
+				<p class="nochar-error hidden">
+					No characters found. Start typing to see letter density.
+				</p>
+				<button class="more-btn">
+					See more <i class="fa-solid fa-chevron-down"></i>
+				</button>
+			</div>
 		</div>
 	</body>
 </html>

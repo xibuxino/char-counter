@@ -1,3 +1,9 @@
+// Text-Preset-0
+$text-0-font-family: 'DM Sans', 'sans-serif';
+$text-0-font-size: 16px;
+$text-0-font-weight: 500;
+$text-0-line-height: 100%;
+$text-0-letter-spacing: -0.6px;
 // Text-Preset-1
 $text-1-font-family: 'DM Sans', 'sans-serif';
 $text-1-font-size: 64px;
@@ -28,6 +34,14 @@ $text-4-font-size: 16px;
 $text-4-font-weight: 500;
 $text-4-line-height: 130%;
 $text-4-letter-spacing: -0.6px;
+
+@mixin text-preset-0 {
+	font-family: $text-0-font-family;
+	font-size: $text-0-font-size;
+	font-weight: $text-0-font-weight;
+	line-height: $text-0-line-height;
+	letter-spacing: $text-0-letter-spacing;
+}
 
 @mixin text-preset-1 {
 	font-family: $text-1-font-family;
