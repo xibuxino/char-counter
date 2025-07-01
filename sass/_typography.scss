@@ -1,0 +1,69 @@
+// Text-Preset-1
+$text-1-font-family: 'DM Sans', 'sans-serif';
+$text-1-font-size: 64px;
+$text-1-font-weight: 700;
+$text-1-line-height: 100%;
+$text-1-letter-spacing: -1px;
+// Text-Preset-1-Mobile
+$text-1-font-family-mobile: 'DM Sans', 'sans-serif';
+$text-1-font-size-mobile: 40px;
+$text-1-font-weight-mobile: 700;
+$text-1-line-height-mobile: 100%;
+$text-1-letter-spacing-mobile: -1px;
+// Text-Preset-2
+$text-2-font-family: 'DM Sans', 'sans-serif';
+$text-2-font-size: 24px;
+$text-2-font-weight: 600;
+$text-2-line-height: 130%;
+$text-2-letter-spacing: -1px;
+// Text-Preset-3
+$text-3-font-family: 'DM Sans', 'sans-serif';
+$text-3-font-size: 20px;
+$text-3-font-weight: 500;
+$text-3-line-height: 140%;
+$text-3-letter-spacing: -0.6px;
+// Text-Preset-4
+$text-4-font-family: 'DM Sans', 'sans-serif';
+$text-4-font-size: 16px;
+$text-4-font-weight: 500;
+$text-4-line-height: 130%;
+$text-4-letter-spacing: -0.6px;
+
+@mixin text-preset-1 {
+	font-family: $text-1-font-family;
+	font-size: $text-1-font-size;
+	font-weight: $text-1-font-weight;
+	line-height: $text-1-line-height;
+	letter-spacing: $text-1-letter-spacing;
+	@media (max-width: 768px) {
+		font-family: $text-1-font-family-mobile;
+		font-size: $text-1-font-size-mobile;
+		font-weight: $text-1-font-weight-mobile;
+		line-height: $text-1-line-height-mobile;
+		letter-spacing: $text-1-letter-spacing-mobile;
+	}
+}
+
+@mixin text-preset-2 {
+	font-family: $text-2-font-family;
+	font-size: $text-2-font-size;
+	font-weight: $text-2-font-weight;
+	line-height: $text-2-line-height;
+	letter-spacing: $text-2-letter-spacing;
+}
+
+@mixin text-preset-3 {
+	font-family: $text-3-font-family;
+	font-size: $text-3-font-size;
+	font-weight: $text-3-font-weight;
+	line-height: $text-3-line-height;
+	letter-spacing: $text-3-letter-spacing;
+}
+
+@mixin text-preset-4 {
+	font-family: $text-4-font-family;
+	font-size: $text-4-font-size;
+	font-weight: $text-4-font-weight;
+	line-height: $text-4-line-height;
+	letter-spacing: $text-4-letter-spacing;
+}

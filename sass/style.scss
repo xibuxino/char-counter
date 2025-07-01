@@ -1,0 +1,14 @@
+@use './colors';
+@use './typography';
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	background-color: colors.$neutral-800-color;
+	font-family: 'DM Sans';
+    font-size: 60px;
+}
