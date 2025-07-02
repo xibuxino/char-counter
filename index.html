@@ -23,8 +23,9 @@
 	<body class="theme-dark">
 		<div class="wrapper">
 			<div class="header">
+				<div class="header--shadow invisible"></div>
 				<div class="header__logo"></div>
-				<button class="header__btn-switch">
+				<button class="header__btn-switch theme-btn-switch">
 					<img
 						class="icon icon-sun"
 						src="./img/icon-sun.svg"
@@ -40,7 +41,7 @@
 				<textarea
 					class="main__text-input focus"
 					placeholder="Start typing here... (or paste your text)"></textarea>
-				<p class="main__error-msg">
+				<p class="main__error-msg hidden">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						class="icon"
@@ -52,14 +53,25 @@
 				</p>
 				<div class="main__options">
 					<div class="main__options-item">
-						<input id="exclude-spaces" type="checkbox" class="checkbox" />
-						<label for="exclude-spaces">Exclude Spaces</label>
+						<input
+							id="exclude-spaces"
+							type="checkbox"
+							class="exclude-spaces checkbox" /><label for="exclude-spaces"
+							>Exclude Spaces</label
+						>
 					</div>
 					<div class="main__options-item">
-						<input id="char-limit" type="checkbox" class="checkbox" />
-						<label for="char-limit">Set Character Limit</label>
+						<input
+							id="char-limit"
+							type="checkbox"
+							class="char-limit checkbox" /><label for="char-limit"
+							>Set Character Limit</label
+						>
 					</div>
-					<input class="main__options-input" type="number" value="300" />
+					<input
+						class="main__options-input char-limit-input main__options-input--hidden"
+						type="number"
+						value="300" />
 					<div class="reading">
 						Approx. reading time <span class="reading-time">XX</span>
 					</div>
@@ -117,11 +129,11 @@
 					<button class="stats__btn">
 						<span class="stats__btn--more">See more</span
 						><span class="stats__btn--less hidden">See less</span
-						><i
-							class="stats__btn-icon stats__btn-icon--rotated fa-solid fa-chevron-down"></i>
+						><i class="stats__btn-icon fa-solid fa-chevron-down"></i>
 					</button>
 				</div>
 			</div>
 		</div>
+		<script src="./js/main.js"></script>
 	</body>
 </html>

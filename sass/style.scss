@@ -13,6 +13,7 @@ body {
 	background-image: var(--global-bg-image);
 	background-attachment: fixed;
 	color: var(--global-text-color);
+	transition: 0.3s;
 }
 ::selection {
 	background-color: $blue-500-color;
@@ -122,17 +123,39 @@ body {
 	width: 100%;
 	max-width: 990px;
 	padding: $spacing-200;
+	padding-top: 0;
 	gap: $spacing-500;
 	@media (min-width: 768px) {
-		padding: $spacing-400;
+		padding-inline: $spacing-400;
 		gap: $spacing-600;
 	}
 }
 
 .header {
+	position: sticky;
+	top: 0;
+	height: 70px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	@media (min-width: 768px) {
+		height: 100px;
+	}
+	&--shadow {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: inherit;
+		background: var(--global-bg-color);
+		box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+		opacity: 0.97;
+		z-index: -10;
+		transition: 0.3s;
+		@media (min-width: 768px) {
+			height: inherit;
+		}
+	}
 	&__logo {
 		width: 100%;
 		height: 30px;
@@ -193,7 +216,7 @@ body {
 		background: var(--input-bg-color);
 		border-radius: $radius-12;
 		border: var(--input-border);
-		transition: background-color 0.3s;
+		transition: background-color 0.2s;
 		&--error {
 			border: 2px solid $orange-800-color;
 			box-shadow: 0px 0px 8px $orange-800-color;
@@ -213,7 +236,8 @@ body {
 			align-items: center;
 		}
 		label {
-			margin-left: 5px;
+			margin-left: 10px;
+			user-select: none;
 			cursor: pointer;
 		}
 		.reading {
@@ -235,6 +259,7 @@ body {
 			background: none;
 			border: 1.5px solid $neutral-600-color;
 			border-radius: $radius-6;
+			transition: opacity 0.1s, visibility 0.1s, height 0.1s;
 			-moz-appearance: textfield;
 			&::-webkit-inner-spin-button,
 			&::-webkit-outer-spin-button {
@@ -242,6 +267,17 @@ body {
 			}
 			&:focus-visible {
 				@include default-focus;
+			}
+			&--hidden {
+				pointer-events: none;
+				opacity: 0;
+				height: 0;
+				@media (min-width: 768px) {
+					display: block;
+					visibility: hidden;
+					opacity: 0;
+					height: 25px;
+				}
 			}
 		}
 	}
@@ -373,4 +409,8 @@ body {
 
 .hidden {
 	display: none;
+}
+
+.invisible {
+	opacity: 0;
 }

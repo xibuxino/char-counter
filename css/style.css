@@ -59,6 +59,7 @@ body {
   background-image: var(--global-bg-image);
   background-attachment: fixed;
   color: var(--global-text-color);
+  transition: 0.3s;
 }
 
 ::-moz-selection {
@@ -131,19 +132,45 @@ body {
   width: 100%;
   max-width: 990px;
   padding: 16px;
+  padding-top: 0;
   gap: 40px;
 }
 @media (min-width: 768px) {
   .wrapper {
-    padding: 32px;
+    padding-inline: 32px;
     gap: 48px;
   }
 }
 
 .header {
+  position: sticky;
+  top: 0;
+  height: 70px;
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+@media (min-width: 768px) {
+  .header {
+    height: 100px;
+  }
+}
+.header--shadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: inherit;
+  background: var(--global-bg-color);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  opacity: 0.97;
+  z-index: -10;
+  transition: 0.3s;
+}
+@media (min-width: 768px) {
+  .header--shadow {
+    height: inherit;
+  }
 }
 .header__logo {
   width: 100%;
@@ -232,7 +259,7 @@ body {
   background: var(--input-bg-color);
   border-radius: 12px;
   border: var(--input-border);
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
 }
 .main__text-input--error {
   border: 2px solid #da3701;
@@ -261,7 +288,10 @@ body {
   }
 }
 .main__options label {
-  margin-left: 5px;
+  margin-left: 10px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   cursor: pointer;
 }
 @media (min-width: 768px) {
@@ -310,6 +340,7 @@ body {
   background: none;
   border: 1.5px solid #404254;
   border-radius: 6px;
+  transition: opacity 0.1s, visibility 0.1s, height 0.1s;
   -moz-appearance: textfield;
 }
 .main__options-input::-webkit-inner-spin-button, .main__options-input::-webkit-outer-spin-button {
@@ -319,6 +350,19 @@ body {
   outline: none;
   border: 2px solid #c27cf8;
   box-shadow: 0px 0px 8px #c27cf8;
+}
+.main__options-input--hidden {
+  pointer-events: none;
+  opacity: 0;
+  height: 0;
+}
+@media (min-width: 768px) {
+  .main__options-input--hidden {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    height: 25px;
+  }
 }
 .main__error-msg {
   font-family: "DM Sans", "sans-serif";
@@ -488,4 +532,8 @@ body {
 
 .hidden {
   display: none;
+}
+
+.invisible {
+  opacity: 0;
 }/*# sourceMappingURL=style.css.map */
