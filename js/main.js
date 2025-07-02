@@ -44,9 +44,10 @@ const restoreData = () => {
 const restoreTheme = () => {
 	if (savedTheme) {
 		setTheme(savedTheme);
-	} else {
-		setTheme('dark');
+		return;
 	}
+	const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+	setTheme(prefersDark ? 'dark' : 'light');
 };
 
 const restoreCharLimit = () => {
