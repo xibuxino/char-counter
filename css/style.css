@@ -73,10 +73,10 @@ body {
 .theme-light {
   --global-bg-color: #ffffff;
   --global-text-color: #12131a;
-  --global-bg-image: url("/img/bg-light-theme.png");
+  --global-bg-image: url("../img/bg-light-theme.png");
 }
 .theme-light .header__logo {
-  --logo-bg-image: url("/img/logo-light-theme.svg");
+  --logo-bg-image: url("../img/logo-light-theme.svg");
 }
 .theme-light .header__btn-switch {
   --btn-bg-color: #f2f2f7;
@@ -101,10 +101,10 @@ body {
 .theme-dark {
   --global-bg-color: #12131a;
   --global-text-color: #f2f2f7;
-  --global-bg-image: url("/img/bg-dark-theme.png");
+  --global-bg-image: url("../img/bg-dark-theme.png");
 }
 .theme-dark .header__logo {
-  --logo-bg-image: url("/img/logo-dark-theme.svg");
+  --logo-bg-image: url("../img/logo-dark-theme.svg");
 }
 .theme-dark .header__btn-switch {
   --btn-bg-color: #2a2b37;
@@ -314,7 +314,7 @@ body {
 .main__options-item .checkbox:checked {
   border: none;
   background-color: #c27cf8;
-  background-image: url("/img/check-solid.svg");
+  background-image: url("../img/check-solid.svg");
   background-repeat: no-repeat;
   background-size: 65%;
   background-position: center;

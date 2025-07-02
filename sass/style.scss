@@ -37,7 +37,7 @@ body {
 	&:checked {
 		border: none;
 		background-color: $blue-500-color;
-		background-image: url('/img/check-solid.svg');
+		background-image: url('../img/check-solid.svg');
 		background-repeat: no-repeat;
 		background-size: 65%;
 		background-position: center;
@@ -56,10 +56,10 @@ body {
 .theme-light {
 	--global-bg-color: #{$neutral-0-color};
 	--global-text-color: #{$neutral-900-color};
-	--global-bg-image: url('/img/bg-light-theme.png');
+	--global-bg-image: url('../img/bg-light-theme.png');
 	.header {
 		&__logo {
-			--logo-bg-image: url('/img/logo-light-theme.svg');
+			--logo-bg-image: url('../img/logo-light-theme.svg');
 		}
 		&__btn-switch {
 			--btn-bg-color: #{$neutral-100-color};
@@ -88,10 +88,10 @@ body {
 .theme-dark {
 	--global-bg-color: #{$neutral-900-color};
 	--global-text-color: #{$neutral-100-color};
-	--global-bg-image: url('/img/bg-dark-theme.png');
+	--global-bg-image: url('../img/bg-dark-theme.png');
 	.header {
 		&__logo {
-			--logo-bg-image: url('/img/logo-dark-theme.svg');
+			--logo-bg-image: url('../img/logo-dark-theme.svg');
 		}
 		&__btn-switch {
 			--btn-bg-color: #{$neutral-700-color};
