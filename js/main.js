@@ -17,8 +17,9 @@ let readingTime = 0;
 let charCountText;
 let wordCountText;
 let sentenceCountText;
-
-let statsList;
+let letterCounts = {};
+let sortedLetterCounts = [];
+let letterList;
 // storage
 const STORAGE_KEYS = {
 	theme: 'theme',
@@ -47,7 +48,7 @@ const prepareDOMElements = () => {
 	wordCountText = document.querySelector('.word-count');
 	sentenceCountText = document.querySelector('.sentence-count');
 	readingTimeText = document.querySelector('.reading-time');
-	statsList = document.querySelector('.stats__list');
+	letterList = document.querySelector('.stats__list');
 };
 
 const prepareDOMEvents = () => {
@@ -67,7 +68,6 @@ const prepareDOMEvents = () => {
 
 	charLimitCheck.addEventListener('click', charLimitError);
 	textInput.addEventListener('keyup', updateAllCounters);
-	// textInput.addEventListener('keydown', updateAllCounters);
 	excludeSpacesCheck.addEventListener('click', updateAllCounters);
 };
 const updateAllCounters = () => {
@@ -77,6 +77,8 @@ const updateAllCounters = () => {
 	readingTimeCounter();
 	assignValues();
 	charLimitError();
+	letterCounter();
+	letterDensity();
 };
 
 const restoreData = () => {
@@ -169,6 +171,50 @@ const readingTimeCounter = () => {
 		readingTime = '<1';
 	}
 };
+
+const letterCounter = () => {
+	letterCounts = {};
+	sortedLetterCounts = [];
+	let letters = textInput.value.replace(/[^a-zA-Z]/g, '').toUpperCase();
+	for (let letter of letters) {
+		letterCounts[letter] = (letterCounts[letter] || 0) + 1;
+	}
+	let resultArray = Object.entries(letterCounts).map(([char, count]) => {
+		return { char, count };
+	});
+	sortedLetterCounts = resultArray.sort((a, b) => b.count - a.count);
+};
+
+const letterDensity = () => {
+	let letterSum = 0;
+	letterList.innerHTML = '';
+	letterSum = sortedLetterCounts.reduce((acc, obj) => acc + obj.count, 0);
+	for (let o of sortedLetterCounts) {
+		let letter = o.char;
+		let count = o.count;
+		let percent = ((count / letterSum) * 100).toFixed(2);
+		const secondPContent = `${count} (${percent})%`;
+		let li = document.createElement('li');
+		let firstP = document.createElement('p');
+		let bar = document.createElement('div');
+		let barResult = document.createElement('div');
+		let secondP = document.createElement('p');
+		li.classList.add('stats__list-item');
+		firstP.classList.add('stats__list-letter');
+		bar.classList.add('stats__list-bar');
+		barResult.classList.add('stats__list-bar-result');
+		secondP.classList.add('stats__list-amount');
+		letterList.appendChild(li);
+		li.appendChild(firstP);
+		bar.appendChild(barResult);
+		li.appendChild(bar);
+		li.appendChild(secondP);
+		firstP.textContent = letter;
+		secondP.textContent = secondPContent;
+		barResult.style.width = `${percent}%`;
+	}
+};
+
 const charLimitError = () => {
 	if (!charLimitCheck.checked) {
 		textInputError.classList.add('hidden');
@@ -194,8 +240,8 @@ const charLimitAutoFill = () => {
 		charLimitInput.value = 300;
 		return;
 	}
-	value = parseInt(value);
-	if (isNaN(value) || value <= 0) {
+	value = Math.abs(parseInt(value));
+	if (isNaN(value) || value === 0) {
 		currentCharLimit = 300;
 		charLimitInput.value = 300;
 	} else {
