@@ -14,9 +14,6 @@
 		<link
 			href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100..1000&display=swap"
 			rel="stylesheet" />
-		<!-- <script
-			src="https://kit.fontawesome.com/52ee440e45.js"
-			crossorigin="anonymous"></script> -->
 		<link rel="stylesheet" href="./css/style.css" />
 		<title>Frontend Mentor | Character counter</title>
 	</head>
@@ -91,56 +88,38 @@
 					<div class="stats__box-item stats__box-item--total">
 						<p class="stats__box-value char-count">0</p>
 						<p class="stats__box-title">Total Characters</p>
-						<img class="stats__box-icon"
-						src="./img/pattern-character-count.svg"">
+						<img
+							class="stats__box-icon"
+							src="./img/pattern-character-count.svg" />
 					</div>
 					<div class="stats__box-item stats__box-item--wordcount">
 						<p class="stats__box-value word-count">0</p>
 						<p class="stats__box-title">Word Count</p>
-						<img class="stats__box-icon" src="./img/pattern-word-count.svg"">
+						<img class="stats__box-icon" src="./img/pattern-word-count.svg" />
 					</div>
 					<div class="stats__box-item stats__box-item--sentencecount">
 						<p class="stats__box-value sentence-count">0</p>
 						<p class="stats__box-title">Sentence Count</p>
-						<img class="stats__box-icon"
-						src="./img/pattern-sentence-count.svg"">
+						<img
+							class="stats__box-icon"
+							src="./img/pattern-sentence-count.svg" />
 					</div>
 				</div>
 				<div class="stats__letters">
 					<p class="stats__title">Letter Density</p>
-					<ul class="stats__list">
-						<!-- <li class="stats__list-item">
-							<p class="stats__list-letter">E</p>
-							<div class="stats__list-bar">
-								<div class="stats__list-bar-result"></div>
-							</div>
-							<p class="stats__list-amount">XX (XX.XX%)</p>
-						</li>
-						<li class="stats__list-item">
-							<p class="stats__list-letter">F</p>
-							<div class="stats__list-bar">
-								<div class="stats__list-bar-result"></div>
-							</div>
-							<p class="stats__list-amount">XX (XX.XX%)</p>
-						</li>
-						<li class="stats__list-item">
-							<p class="stats__list-letter">G</p>
-							<div class="stats__list-bar">
-								<div class="stats__list-bar-result" style="width: 50%"></div>
-							</div>
-							<p class="stats__list-amount">X (X.XX%)</p>
-						</li> -->
-					</ul>
-					<p class="stats__msg hidden">
+					<ul class="stats__list"></ul>
+					<p class="stats__msg">
 						No characters found. Start typing to see letter density.
 					</p>
-					<button class="stats__btn">
+					<button class="stats__btn hidden">
 						<span class="stats__btn--more">See more</span
 						><span class="stats__btn--less hidden">See less</span>
+						<div class="stats__btn-icon"></div>
 					</button>
 				</div>
 			</div>
 		</div>
+
 		<script src="./js/main.js"></script>
 	</body>
 </html>

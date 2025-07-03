@@ -80,6 +80,7 @@ body {
   --input-bg-color: #f2f2f7;
   --input-hover-bg-color: #e4e4ef;
   --input-border: 2px solid #e4e4ef;
+  --arrow-icon: url("../img/chevron-down-solid.svg");
 }
 .theme-light .icon-sun {
   display: none;
@@ -98,6 +99,7 @@ body {
   --input-bg-color: #21222c;
   --input-hover-bg-color: #2a2b37;
   --input-border: 2px solid #2a2b37;
+  --arrow-icon: url("../img/chevron-down-solid-white.svg");
 }
 .theme-dark .icon-sun {
   display: block;
@@ -451,7 +453,8 @@ body {
 .stats__list {
   display: flex;
   flex-direction: column;
-  padding-block: 20px;
+  opacity: 1;
+  overflow: hidden;
   gap: 12px;
 }
 .stats__list-item {
@@ -462,9 +465,17 @@ body {
   letter-spacing: -0.6px;
   display: grid;
   align-items: center;
-  grid-template-columns: 20px auto 100px;
+  grid-template-columns: 20px auto 80px;
   width: 100%;
   gap: 10px;
+}
+.stats__list-item:first-child {
+  padding-top: 20px;
+}
+@media (min-width: 768px) {
+  .stats__list-item {
+    grid-template-columns: 20px auto 100px;
+  }
 }
 .stats__list-bar {
   height: 12px;
@@ -483,13 +494,19 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.stats__list--expanded {
+  max-height: 999px;
+}
+.stats__list:not(.stats__list--expanded) .stats__list-item:nth-child(n+5) {
+  display: none;
+}
 .stats__msg {
   font-family: "DM Sans", "sans-serif";
   font-size: 16px;
   font-weight: 500;
   line-height: 130%;
   letter-spacing: -0.6px;
-  padding-top: 20px;
+  padding-block: 16px;
 }
 .stats__btn {
   font-family: "DM Sans", "sans-serif";
@@ -497,6 +514,8 @@ body {
   font-weight: 500;
   line-height: 140%;
   letter-spacing: -0.6px;
+  padding-top: 8px;
+  padding-bottom: 12px;
   color: inherit;
   background: none;
   border: none;
@@ -508,6 +527,19 @@ body {
   outline: none;
   border: 2px solid #c27cf8;
   box-shadow: 0px 0px 8px #c27cf8;
+}
+.stats__btn-icon {
+  display: inline-block;
+  background-image: var(--arrow-icon);
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  transition: transform 0.3s;
+}
+.stats__btn-icon--rotated {
+  transform: rotate(180deg);
 }
 
 .hidden {

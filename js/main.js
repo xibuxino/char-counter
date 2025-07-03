@@ -1,26 +1,35 @@
-let themeBtn;
-let body;
-let header;
-let headerShadow;
-let charLimitCheck;
-let excludeSpacesCheck;
-let charLimitInput;
-let textInput;
-let textInputError;
-let textInputErrorChars;
-let readingTimeText;
+const DOM = {
+	body: null,
+	themeBtn: null,
+	header: null,
+	headerShadow: null,
+	charLimitCheck: null,
+	charLimitInput: null,
+	textInput: null,
+	textInputError: null,
+	excludeSpacesCheck: null,
+	textInputErrorChars: null,
+	charCountText: null,
+	wordCountText: null,
+	sentenceCountText: null,
+	readingTimeText: null,
+	letterList: null,
+	letterListMsg: null,
+	letterBtn: null,
+	letterBtnMore: null,
+	letterBtnLess: null,
+	letterBtnIcon: null,
+};
+
 let currentCharLimit = 300;
 let charCount = 0;
 let wordCount = 0;
 let sentenceCount = 0;
 let readingTime = 0;
-let charCountText;
-let wordCountText;
-let sentenceCountText;
 let letterCounts = {};
 let sortedLetterCounts = [];
-let letterList;
-// storage
+
+// storage keys
 const STORAGE_KEYS = {
 	theme: 'theme',
 };
@@ -34,42 +43,47 @@ const main = () => {
 };
 
 const prepareDOMElements = () => {
-	body = document.body;
-	themeBtn = document.querySelector('.theme-btn-switch');
-	header = document.querySelector('.header');
-	headerShadow = document.querySelector('.header--shadow');
-	charLimitCheck = document.querySelector('.char-limit');
-	charLimitInput = document.querySelector('.char-limit-input');
-	textInput = document.querySelector('.main__text-input');
-	textInputError = document.querySelector('.main__error-msg');
-	excludeSpacesCheck = document.querySelector('.exclude-spaces');
-	textInputErrorChars = document.querySelector('.error-limit');
-	charCountText = document.querySelector('.char-count');
-	wordCountText = document.querySelector('.word-count');
-	sentenceCountText = document.querySelector('.sentence-count');
-	readingTimeText = document.querySelector('.reading-time');
-	letterList = document.querySelector('.stats__list');
+	DOM.body = document.body;
+	DOM.themeBtn = document.querySelector('.theme-btn-switch');
+	DOM.header = document.querySelector('.header');
+	DOM.headerShadow = document.querySelector('.header--shadow');
+	DOM.charLimitCheck = document.querySelector('.char-limit');
+	DOM.charLimitInput = document.querySelector('.char-limit-input');
+	DOM.textInput = document.querySelector('.main__text-input');
+	DOM.textInputError = document.querySelector('.main__error-msg');
+	DOM.excludeSpacesCheck = document.querySelector('.exclude-spaces');
+	DOM.textInputErrorChars = document.querySelector('.error-limit');
+	DOM.charCountText = document.querySelector('.char-count');
+	DOM.wordCountText = document.querySelector('.word-count');
+	DOM.sentenceCountText = document.querySelector('.sentence-count');
+	DOM.readingTimeText = document.querySelector('.reading-time');
+	DOM.letterList = document.querySelector('.stats__list');
+	DOM.letterListMsg = document.querySelector('.stats__msg');
+	DOM.letterBtn = document.querySelector('.stats__btn');
+	DOM.letterBtnMore = document.querySelector('.stats__btn--more');
+	DOM.letterBtnLess = document.querySelector('.stats__btn--less');
+	DOM.letterBtnIcon = document.querySelector('.stats__btn-icon');
 };
 
 const prepareDOMEvents = () => {
-	themeBtn.addEventListener('click', handleThemeBtn);
+	DOM.themeBtn.addEventListener('click', handleThemeBtn);
 	window.addEventListener('scroll', showHeaderShadow);
-	charLimitCheck.addEventListener('click', showCharLimit);
-	charLimitInput.addEventListener('blur', charLimitAutoFill);
-	charLimitInput.addEventListener('blur', charLimitError);
-	charLimitInput.addEventListener(
+	DOM.charLimitCheck.addEventListener('click', showCharLimit);
+	DOM.charLimitInput.addEventListener('blur', charLimitAutoFill);
+	DOM.charLimitInput.addEventListener('blur', charLimitError);
+	DOM.charLimitInput.addEventListener(
 		'keydown',
-		handleKeys(['Enter'], charLimitAutoFill)
+		handleKeys(['Enter'], () => {
+			charLimitAutoFill();
+			charLimitError();
+		})
 	);
-	charLimitInput.addEventListener(
-		'keydown',
-		handleKeys(['Enter'], charLimitError)
-	);
-
-	charLimitCheck.addEventListener('click', charLimitError);
-	textInput.addEventListener('keyup', updateAllCounters);
-	excludeSpacesCheck.addEventListener('click', updateAllCounters);
+	DOM.textInput.addEventListener('keyup', debounce(updateAllCounters, 150));
+	DOM.charLimitCheck.addEventListener('click', charLimitError);
+	DOM.excludeSpacesCheck.addEventListener('click', updateAllCounters);
+	DOM.letterBtn.addEventListener('click', handleLetterBtn);
 };
+
 const updateAllCounters = () => {
 	charCounter();
 	wordCounter();
@@ -84,7 +98,8 @@ const updateAllCounters = () => {
 const restoreData = () => {
 	restoreTheme();
 };
-// utils
+
+// utils;
 function debounce(fn, delay) {
 	let timeout;
 	return function (...args) {
@@ -111,39 +126,40 @@ const restoreTheme = () => {
 	setTheme(prefersDark ? 'dark' : 'light');
 };
 
-// header shadow
+// show header shadow
 const showHeaderShadow = () => {
 	if (window.pageYOffset > 20) {
-		headerShadow.classList.remove('invisible');
+		DOM.headerShadow.classList.remove('invisible');
 	} else {
-		headerShadow.classList.add('invisible');
+		DOM.headerShadow.classList.add('invisible');
 	}
 };
 // color theme
 const setTheme = (theme) => {
-	body.classList.remove('theme-light', 'theme-dark');
-	body.classList.add(`theme-${theme}`);
+	DOM.body.classList.remove('theme-light', 'theme-dark');
+	DOM.body.classList.add(`theme-${theme}`);
 	localStorage.setItem(STORAGE_KEYS.theme, theme);
 };
 const handleThemeBtn = () => {
-	const currentTheme = body.classList.contains('theme-dark') ? 'dark' : 'light';
+	const currentTheme = DOM.body.classList.contains('theme-dark')
+		? 'dark'
+		: 'light';
 	setTheme(currentTheme === 'dark' ? 'light' : 'dark');
 };
 
-// char limit
+// show char limit
 const showCharLimit = () => {
-	if (charLimitCheck.checked) {
-		charLimitInput.classList.remove('main__options-input--hidden');
+	if (DOM.charLimitCheck.checked) {
+		DOM.charLimitInput.classList.remove('main__options-input--hidden');
 	} else {
-		charLimitInput.classList.add('main__options-input--hidden');
+		DOM.charLimitInput.classList.add('main__options-input--hidden');
 	}
 };
 
 // counters
-
 const charCounter = () => {
-	let text = textInput.value.replaceAll('\n', '');
-	if (excludeSpacesCheck.checked) {
+	let text = DOM.textInput.value.replaceAll('\n', '');
+	if (DOM.excludeSpacesCheck.checked) {
 		let trimmedText = text.replaceAll(' ', '');
 		charCount = trimmedText.length;
 	} else {
@@ -152,15 +168,14 @@ const charCounter = () => {
 };
 
 const wordCounter = () => {
-	let text = textInput.value.replaceAll('\n', ' ');
+	let text = DOM.textInput.value.replaceAll('\n', ' ');
 	let words = [];
-	words = text.split(' ').filter(Boolean);
 	words = text.match(/\p{L}+/gu) || [];
 	wordCount = words.length;
 };
 
 const sentenceCounter = () => {
-	let text = textInput.value.replaceAll('"', '').trim();
+	let text = DOM.textInput.value.replaceAll('"', '').trim();
 	let sentences = [];
 	sentences = text
 		.split(/[.!?]/)
@@ -179,7 +194,8 @@ const readingTimeCounter = () => {
 const letterCounter = () => {
 	letterCounts = {};
 	sortedLetterCounts = [];
-	let letters = textInput.value.replace(/[^a-zA-Z]/g, '').toUpperCase();
+	let letters = DOM.textInput.value.replace(/[^\p{L}]/gu, '').toUpperCase();
+
 	for (let letter of letters) {
 		letterCounts[letter] = (letterCounts[letter] || 0) + 1;
 	}
@@ -191,8 +207,14 @@ const letterCounter = () => {
 
 const letterDensity = () => {
 	let letterSum = 0;
-	letterList.innerHTML = '';
+	DOM.letterList.innerHTML = '';
 	letterSum = sortedLetterCounts.reduce((acc, obj) => acc + obj.count, 0);
+	if (letterSum === 0) {
+		DOM.letterListMsg.classList.remove('hidden');
+	} else {
+		DOM.letterListMsg.classList.add('hidden');
+	}
+
 	for (let o of sortedLetterCounts) {
 		let letter = o.char;
 		let count = o.count;
@@ -208,7 +230,7 @@ const letterDensity = () => {
 		bar.classList.add('stats__list-bar');
 		barResult.classList.add('stats__list-bar-result');
 		secondP.classList.add('stats__list-amount');
-		letterList.appendChild(li);
+		DOM.letterList.appendChild(li);
 		li.appendChild(firstP);
 		bar.appendChild(barResult);
 		li.appendChild(bar);
@@ -217,48 +239,62 @@ const letterDensity = () => {
 		secondP.textContent = secondPContent;
 		barResult.style.width = `${percent}%`;
 	}
+	if (sortedLetterCounts.length > 4) {
+		DOM.letterBtn.classList.remove('hidden');
+	} else {
+		DOM.letterBtn.classList.add('hidden');
+		DOM.letterList.classList.remove('stats__list--expanded');
+		DOM.letterBtnLess.classList.add('hidden');
+		DOM.letterBtnMore.classList.remove('hidden');
+	}
 };
 
-const charLimitError = () => {
-	if (!charLimitCheck.checked) {
-		textInputError.classList.add('hidden');
-		textInput.classList.remove('main__text-input--error');
-		return;
+// button handlers
+const handleLetterBtn = () => {
+	if (DOM.letterList.classList.contains('stats__list--expanded')) {
+		DOM.letterList.classList.remove('stats__list--expanded');
+		DOM.letterBtnLess.classList.add('hidden');
+		DOM.letterBtnMore.classList.remove('hidden');
+		DOM.letterBtnIcon.classList.remove('stats__btn-icon--rotated');
 	} else {
-		if (charCount > currentCharLimit) {
-			textInputError.classList.remove('hidden');
-			textInput.classList.add('main__text-input--error');
-			textInputErrorChars.textContent = currentCharLimit;
-		} else {
-			textInputError.classList.add('hidden');
-			textInput.classList.remove('main__text-input--error');
-		}
+		DOM.letterList.classList.add('stats__list--expanded');
+		DOM.letterBtnLess.classList.remove('hidden');
+		DOM.letterBtnMore.classList.add('hidden');
+		DOM.letterBtnIcon.classList.add('stats__btn-icon--rotated');
+		DOM.letterBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
 	}
 };
 
 const charLimitAutoFill = () => {
-	let value = charLimitInput.value.trim();
+	let value = Math.abs(parseInt(DOM.charLimitInput.value.trim())) || 300;
+	currentCharLimit = value;
+	DOM.charLimitInput.value = value;
+};
 
-	if (value === '') {
-		currentCharLimit = 300;
-		charLimitInput.value = 300;
+// errors
+const charLimitError = () => {
+	if (!DOM.charLimitCheck.checked) {
+		DOM.textInputError.classList.add('hidden');
+		DOM.textInput.classList.remove('main__text-input--error');
 		return;
-	}
-	value = Math.abs(parseInt(value));
-	if (isNaN(value) || value === 0) {
-		currentCharLimit = 300;
-		charLimitInput.value = 300;
 	} else {
-		currentCharLimit = value;
-		charLimitInput.value = value;
+		if (charCount > currentCharLimit) {
+			DOM.textInputError.classList.remove('hidden');
+			DOM.textInput.classList.add('main__text-input--error');
+			DOM.textInputErrorChars.textContent = currentCharLimit;
+		} else {
+			DOM.textInputError.classList.add('hidden');
+			DOM.textInput.classList.remove('main__text-input--error');
+		}
 	}
 };
-// assign box data
 
+// assign values
 const assignValues = () => {
-	charCountText.textContent = charCount || 0;
-	wordCountText.textContent = wordCount || 0;
-	sentenceCountText.textContent = sentenceCount || 0;
-	readingTimeText.textContent = readingTime;
+	DOM.charCountText.textContent = charCount || 0;
+	DOM.wordCountText.textContent = wordCount || 0;
+	DOM.sentenceCountText.textContent = sentenceCount || 0;
+	DOM.readingTimeText.textContent = readingTime;
 };
+
 document.addEventListener('DOMContentLoaded', main);

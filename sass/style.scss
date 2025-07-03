@@ -63,7 +63,7 @@ body {
 	--input-bg-color: #{$neutral-100-color};
 	--input-hover-bg-color: #{$neutral-200-color};
 	--input-border: 2px solid #{$neutral-200-color};
-
+	--arrow-icon: url('../img/chevron-down-solid.svg');
 	.icon-sun {
 		display: none;
 	}
@@ -82,7 +82,7 @@ body {
 	--input-bg-color: #{$neutral-800-color};
 	--input-hover-bg-color: #{$neutral-700-color};
 	--input-border: 2px solid #{$neutral-700-color};
-
+	--arrow-icon: url('../img/chevron-down-solid-white.svg');
 	.icon-sun {
 		display: block;
 	}
@@ -337,15 +337,22 @@ body {
 	&__list {
 		display: flex;
 		flex-direction: column;
-		padding-block: $spacing-250;
+		opacity: 1;
+		overflow: hidden;
 		gap: $spacing-150;
 		&-item {
 			@include text-preset-4;
 			display: grid;
 			align-items: center;
-			grid-template-columns: 20px auto 100px;
+			grid-template-columns: 20px auto 80px;
 			width: 100%;
 			gap: 10px;
+			&:first-child {
+				padding-top: $spacing-250;
+			}
+			@media (min-width: 768px) {
+				grid-template-columns: 20px auto 100px;
+			}
 		}
 		&-bar {
 			height: 12px;
@@ -364,13 +371,21 @@ body {
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
+		&--expanded {
+			max-height: 999px;
+		}
+		&:not(&--expanded) .stats__list-item:nth-child(n + 5) {
+			display: none;
+		}
 	}
 	&__msg {
 		@include text-preset-4;
-		padding-top: $spacing-250;
+		padding-block: $spacing-200;
 	}
 	&__btn {
 		@include text-preset-3;
+		padding-top: $spacing-100;
+		padding-bottom: $spacing-150;
 		color: inherit;
 		background: none;
 		border: none;
@@ -381,17 +396,19 @@ body {
 			@include default-focus;
 		}
 
-		// &-icon {
-		// 	background-image: url('../img/chevron-down-solid.svg');
-		// 	height: 20px;
-		// 	width: 20px;
-		// 	background-repeat: no-repeat;
-		// 	padding-inline: $spacing-075;
-		// 	transition: transform 0.3s;
-		// 	&--rotated {
-		// 		transform: rotate(180deg);
-		// 	}
-		// }
+		&-icon {
+			display: inline-block;
+			background-image: var(--arrow-icon);
+			height: 20px;
+			width: 20px;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: center;
+			transition: transform 0.3s;
+			&--rotated {
+				transform: rotate(180deg);
+			}
+		}
 	}
 }
 
