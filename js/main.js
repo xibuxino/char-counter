@@ -155,13 +155,17 @@ const wordCounter = () => {
 	let text = textInput.value.replaceAll('\n', ' ');
 	let words = [];
 	words = text.split(' ').filter(Boolean);
+	words = text.match(/\p{L}+/gu) || [];
 	wordCount = words.length;
 };
 
 const sentenceCounter = () => {
 	let text = textInput.value.replaceAll('"', '').trim();
 	let sentences = [];
-	sentences = text.split(/[.!?]/).filter(Boolean);
+	sentences = text
+		.split(/[.!?]/)
+		.map((s) => s.trim())
+		.filter(Boolean);
 	sentenceCount = sentences.length;
 };
 
