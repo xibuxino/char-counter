@@ -3,9 +3,14 @@ let body;
 let header;
 let headerShadow;
 let charLimitCheck;
+let excludeSpacesCheck;
 let charLimitInput;
 let textInput;
 let textInputError;
+let textInputErrorChars;
+let charCount = 0;
+let wordCount = 0;
+let sentenceCount = 0;
 // storage
 const STORAGE_KEYS = {
 	theme: 'theme',
@@ -32,6 +37,8 @@ const prepareDOMElements = () => {
 	charLimitInput = document.querySelector('.char-limit-input');
 	textInput = document.querySelector('.main__text-input');
 	textInputError = document.querySelector('.main__error-msg');
+	excludeSpacesCheck = document.querySelector('.exclude-spaces');
+	textInputErrorChars = document.querySelector('.error-limit');
 };
 
 const prepareDOMEvents = () => {
@@ -39,14 +46,17 @@ const prepareDOMEvents = () => {
 	window.addEventListener('scroll', showHeaderShadow);
 	charLimitCheck.addEventListener('click', showCharLimit);
 	charLimitInput.addEventListener('keyup', debounce(getCharLimit, 100));
+	textInput.addEventListener('keyup', () => charCounter(textInput));
+	excludeSpacesCheck.addEventListener('click', () => charCounter(textInput));
 	textInput.addEventListener('keyup', debounce(charLimitError, 100));
 	charLimitInput.addEventListener('keyup', charLimitError);
 	charLimitCheck.addEventListener('click', charLimitError);
+	excludeSpacesCheck.addEventListener('click', charLimitError);
 };
 
 const restoreData = () => {
 	restoreTheme();
-	restoreCharLimit();
+	// restoreCharLimit();
 };
 // utils
 function debounce(fn, delay) {
@@ -70,7 +80,6 @@ const restoreCharLimit = () => {
 	if (charLimitState === 'true') {
 		charLimitCheck.checked = true;
 		charLimitInput.classList.remove('main__options-input--hidden');
-		
 	} else {
 		charLimitCheck.checked = false;
 		charLimitInput.classList.add('main__options-input--hidden');
@@ -118,15 +127,28 @@ const getCharLimit = () => {
 	console.log(localStorage.getItem(STORAGE_KEYS.charLimit));
 };
 
+const charCounter = (input) => {
+	let text = input.value;
+	if (excludeSpacesCheck.checked) {
+		let trimmedText = text.replaceAll(' ', '');
+		charCount = trimmedText.length;
+	} else {
+		charCount = text.length;
+	}
+};
 const charLimitError = () => {
 	if (!charLimitCheck.checked) {
 		textInputError.classList.add('hidden');
+		textInput.classList.remove('main__text-input--error');
 		return;
 	} else {
-		if (textInput.value.length > charLimitInput.value) {
+		if (charCount > charLimitInput.value) {
 			textInputError.classList.remove('hidden');
+			textInput.classList.add('main__text-input--error');
+			textInputErrorChars.textContent = charLimitInput.value;
 		} else {
 			textInputError.classList.add('hidden');
+			textInput.classList.remove('main__text-input--error');
 		}
 	}
 };

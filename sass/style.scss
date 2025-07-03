@@ -57,31 +57,18 @@ body {
 	--global-bg-color: #{$neutral-0-color};
 	--global-text-color: #{$neutral-900-color};
 	--global-bg-image: url('../img/bg-light-theme.png');
-	.header {
-		&__logo {
-			--logo-bg-image: url('../img/logo-light-theme.svg');
-		}
-		&__btn-switch {
-			--btn-bg-color: #{$neutral-100-color};
-			&:hover {
-				--btn-bg-color: #{$neutral-200-color};
-			}
-		}
-	}
+	--btn-bg-color: #{$neutral-100-color};
+	--btn-hover-bg-color: #{$neutral-200-color};
+	--logo-bg-image: url('../img/logo-light-theme.svg');
+	--input-bg-color: #{$neutral-100-color};
+	--input-hover-bg-color: #{$neutral-200-color};
+	--input-border: 2px solid #{$neutral-200-color};
+
 	.icon-sun {
 		display: none;
 	}
 	.icon-moon {
 		display: block;
-	}
-	.main {
-		&__text-input {
-			--input-bg-color: #{$neutral-100-color};
-			--input-border: 2px solid #{$neutral-200-color};
-			&:hover {
-				--input-bg-color: #{$neutral-200-color};
-			}
-		}
 	}
 }
 // Dark theme settings
@@ -89,31 +76,18 @@ body {
 	--global-bg-color: #{$neutral-900-color};
 	--global-text-color: #{$neutral-100-color};
 	--global-bg-image: url('../img/bg-dark-theme.png');
-	.header {
-		&__logo {
-			--logo-bg-image: url('../img/logo-dark-theme.svg');
-		}
-		&__btn-switch {
-			--btn-bg-color: #{$neutral-700-color};
-			&:hover {
-				--btn-bg-color: #{$neutral-600-color};
-			}
-		}
-	}
+	--btn-bg-color: #{$neutral-700-color};
+	--btn-hover-bg-color: #{$neutral-600-color};
+	--logo-bg-image: url('../img/logo-dark-theme.svg');
+	--input-bg-color: #{$neutral-800-color};
+	--input-hover-bg-color: #{$neutral-700-color};
+	--input-border: 2px solid #{$neutral-700-color};
+
 	.icon-sun {
 		display: block;
 	}
 	.icon-moon {
 		display: none;
-	}
-	.main {
-		&__text-input {
-			--input-bg-color: #{$neutral-800-color};
-			--input-border: 2px solid #{$neutral-700-color};
-			&:hover {
-				--input-bg-color: #{$neutral-700-color};
-			}
-		}
 	}
 }
 
@@ -186,6 +160,9 @@ body {
 		&:focus-visible {
 			@include default-focus;
 		}
+		&:hover {
+			background-color: var(--btn-hover-bg-color);
+		}
 	}
 }
 
@@ -221,6 +198,9 @@ body {
 		}
 		&:focus-visible {
 			@include default-focus;
+		}
+		&:hover {
+			background-color: var(--input-hover-bg-color);
 		}
 	}
 	&__options {
@@ -279,10 +259,18 @@ body {
 			}
 		}
 	}
+	&__textarea-box {
+		position: relative;
+	}
 	&__error-msg {
 		@include text-preset-4;
+		position: absolute;
+		bottom: 0;
+		margin: $spacing-075;
+		padding: $spacing-075;
 		color: $orange-800-color;
-		transition: opacity 0.3s;
+		border-radius: $radius-6;
+		background-color: var(--input-bg-color);
 		.icon {
 			width: 1.2em;
 			height: 1.2em;
