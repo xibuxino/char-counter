@@ -14,12 +14,12 @@ let sentenceCount = 0;
 // storage
 const STORAGE_KEYS = {
 	theme: 'theme',
-	isCharLimit: 'isCharLimit',
-	charLimit: 'charLimit',
+	// isCharLimit: 'isCharLimit',
+	// charLimit: 'charLimit',
 };
 const savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
-const charLimitState = localStorage.getItem(STORAGE_KEYS.isCharLimit);
-const charLimitValue = localStorage.getItem(STORAGE_KEYS.charLimit);
+// const charLimitState = localStorage.getItem(STORAGE_KEYS.isCharLimit);
+// const charLimitValue = localStorage.getItem(STORAGE_KEYS.charLimit);
 
 // prepare DOM and restore data
 const main = () => {
@@ -52,6 +52,7 @@ const prepareDOMEvents = () => {
 	charLimitInput.addEventListener('keyup', charLimitError);
 	charLimitCheck.addEventListener('click', charLimitError);
 	excludeSpacesCheck.addEventListener('click', charLimitError);
+	console.log(charLimitCheck.checked);
 };
 
 const restoreData = () => {
@@ -76,16 +77,16 @@ const restoreTheme = () => {
 	setTheme(prefersDark ? 'dark' : 'light');
 };
 
-const restoreCharLimit = () => {
-	if (charLimitState === 'true') {
-		charLimitCheck.checked = true;
-		charLimitInput.classList.remove('main__options-input--hidden');
-	} else {
-		charLimitCheck.checked = false;
-		charLimitInput.classList.add('main__options-input--hidden');
-	}
-	charLimitInput.value = localStorage.getItem(STORAGE_KEYS.charLimit);
-};
+// const restoreCharLimit = () => {
+// 	if (charLimitState === 'true') {
+// 		charLimitCheck.checked = true;
+// 		charLimitInput.classList.remove('main__options-input--hidden');
+// 	} else {
+// 		charLimitCheck.checked = false;
+// 		charLimitInput.classList.add('main__options-input--hidden');
+// 	}
+// 	charLimitInput.value = localStorage.getItem(STORAGE_KEYS.charLimit);
+// };
 
 // header shadow
 const showHeaderShadow = () => {
