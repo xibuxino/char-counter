@@ -9,6 +9,7 @@ let textInput;
 let textInputError;
 let textInputErrorChars;
 let readingTimeText;
+let currentCharLimit = 300;
 let charCount = 0;
 let wordCount = 0;
 let sentenceCount = 0;
@@ -53,11 +54,16 @@ const prepareDOMEvents = () => {
 	charLimitInput.addEventListener('blur', charLimitAutoFill);
 	charLimitInput.addEventListener('blur', charLimitError);
 	charLimitInput.addEventListener(
-		'keypress',
+		'keydown',
+		handleKeys(['Enter'], charLimitAutoFill)
+	);
+	charLimitInput.addEventListener(
+		'keydown',
 		handleKeys(['Enter'], charLimitError)
 	);
+
 	charLimitCheck.addEventListener('click', charLimitError);
-	textInput.addEventListener('keyup', updateAllCounters);
+	textInput.addEventListener('keydown', updateAllCounters);
 	excludeSpacesCheck.addEventListener('click', updateAllCounters);
 };
 const updateAllCounters = () => {
@@ -65,10 +71,7 @@ const updateAllCounters = () => {
 	wordCounter();
 	sentenceCounter();
 	readingTimeCounter();
-	assignCharCount();
-	assignWordCount();
-	assignSentenceCount();
-	assignReadingTime();
+	assignValues();
 	charLimitError();
 };
 
@@ -168,10 +171,10 @@ const charLimitError = () => {
 		textInput.classList.remove('main__text-input--error');
 		return;
 	} else {
-		if (charCount > charLimitInput.value) {
+		if (charCount > currentCharLimit) {
 			textInputError.classList.remove('hidden');
 			textInput.classList.add('main__text-input--error');
-			textInputErrorChars.textContent = charLimitInput.value;
+			textInputErrorChars.textContent = currentCharLimit;
 		} else {
 			textInputError.classList.add('hidden');
 			textInput.classList.remove('main__text-input--error');
@@ -183,31 +186,25 @@ const charLimitAutoFill = () => {
 	let value = charLimitInput.value.trim();
 
 	if (value === '') {
+		currentCharLimit = 300;
 		charLimitInput.value = 300;
 		return;
 	}
 	value = parseInt(value);
 	if (isNaN(value) || value <= 0) {
+		currentCharLimit = 300;
 		charLimitInput.value = 300;
 	} else {
+		currentCharLimit = value;
 		charLimitInput.value = value;
 	}
 };
 // assign box data
 
-const assignCharCount = () => {
+const assignValues = () => {
 	charCountText.textContent = charCount || 0;
-};
-
-const assignWordCount = () => {
 	wordCountText.textContent = wordCount || 0;
-};
-
-const assignSentenceCount = () => {
 	sentenceCountText.textContent = sentenceCount || 0;
-};
-
-const assignReadingTime = () => {
 	readingTimeText.textContent = readingTime;
 };
 document.addEventListener('DOMContentLoaded', main);
