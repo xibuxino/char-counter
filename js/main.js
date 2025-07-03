@@ -17,6 +17,8 @@ let readingTime = 0;
 let charCountText;
 let wordCountText;
 let sentenceCountText;
+
+let statsList;
 // storage
 const STORAGE_KEYS = {
 	theme: 'theme',
@@ -45,6 +47,7 @@ const prepareDOMElements = () => {
 	wordCountText = document.querySelector('.word-count');
 	sentenceCountText = document.querySelector('.sentence-count');
 	readingTimeText = document.querySelector('.reading-time');
+	statsList = document.querySelector('.stats__list');
 };
 
 const prepareDOMEvents = () => {
@@ -63,7 +66,8 @@ const prepareDOMEvents = () => {
 	);
 
 	charLimitCheck.addEventListener('click', charLimitError);
-	textInput.addEventListener('keydown', updateAllCounters);
+	textInput.addEventListener('keyup', updateAllCounters);
+	// textInput.addEventListener('keydown', updateAllCounters);
 	excludeSpacesCheck.addEventListener('click', updateAllCounters);
 };
 const updateAllCounters = () => {
@@ -153,7 +157,7 @@ const wordCounter = () => {
 };
 
 const sentenceCounter = () => {
-	let text = textInput.value.trim();
+	let text = textInput.value.replaceAll('"', '').trim();
 	let sentences = [];
 	sentences = text.split(/[.!?]/).filter(Boolean);
 	sentenceCount = sentences.length;
