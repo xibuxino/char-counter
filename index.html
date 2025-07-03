@@ -75,9 +75,11 @@
 					<input
 						class="main__options-input char-limit-input main__options-input--hidden"
 						type="number"
+						min="0"
+						step="1"
 						value="300" />
 					<div class="reading">
-						Approx. reading time <span class="reading-time">XX</span>
+						Approx. reading time <span class="reading-time">-</span> min
 					</div>
 				</div>
 			</div>
@@ -85,18 +87,18 @@
 			<div class="stats">
 				<div class="stats__box">
 					<div class="stats__box-item stats__box-item--total">
-						<p class="stats__box-value">XXX</p>
+						<p class="stats__box-value char-count">0</p>
 						<p class="stats__box-title">Total Characters</p>
 						<img class="stats__box-icon"
 						src="./img/pattern-character-count.svg"">
 					</div>
 					<div class="stats__box-item stats__box-item--wordcount">
-						<p class="stats__box-value">XXX</p>
+						<p class="stats__box-value word-count">0</p>
 						<p class="stats__box-title">Word Count</p>
 						<img class="stats__box-icon" src="./img/pattern-word-count.svg"">
 					</div>
 					<div class="stats__box-item stats__box-item--sentencecount">
-						<p class="stats__box-value">XXX</p>
+						<p class="stats__box-value sentence-count">0</p>
 						<p class="stats__box-title">Sentence Count</p>
 						<img class="stats__box-icon"
 						src="./img/pattern-sentence-count.svg"">

@@ -8,18 +8,19 @@ let charLimitInput;
 let textInput;
 let textInputError;
 let textInputErrorChars;
+let readingTimeText;
 let charCount = 0;
 let wordCount = 0;
 let sentenceCount = 0;
+let readingTime = 0;
+let charCountText;
+let wordCountText;
+let sentenceCountText;
 // storage
 const STORAGE_KEYS = {
 	theme: 'theme',
-	// isCharLimit: 'isCharLimit',
-	// charLimit: 'charLimit',
 };
 const savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
-// const charLimitState = localStorage.getItem(STORAGE_KEYS.isCharLimit);
-// const charLimitValue = localStorage.getItem(STORAGE_KEYS.charLimit);
 
 // prepare DOM and restore data
 const main = () => {
@@ -39,25 +40,40 @@ const prepareDOMElements = () => {
 	textInputError = document.querySelector('.main__error-msg');
 	excludeSpacesCheck = document.querySelector('.exclude-spaces');
 	textInputErrorChars = document.querySelector('.error-limit');
+	charCountText = document.querySelector('.char-count');
+	wordCountText = document.querySelector('.word-count');
+	sentenceCountText = document.querySelector('.sentence-count');
+	readingTimeText = document.querySelector('.reading-time');
 };
 
 const prepareDOMEvents = () => {
 	themeBtn.addEventListener('click', handleThemeBtn);
 	window.addEventListener('scroll', showHeaderShadow);
 	charLimitCheck.addEventListener('click', showCharLimit);
-	charLimitInput.addEventListener('keyup', debounce(getCharLimit, 100));
-	textInput.addEventListener('keyup', () => charCounter(textInput));
-	excludeSpacesCheck.addEventListener('click', () => charCounter(textInput));
-	textInput.addEventListener('keyup', debounce(charLimitError, 100));
-	charLimitInput.addEventListener('keyup', charLimitError);
+	charLimitInput.addEventListener('blur', charLimitAutoFill);
+	charLimitInput.addEventListener('blur', charLimitError);
+	charLimitInput.addEventListener(
+		'keypress',
+		handleKeys(['Enter'], charLimitError)
+	);
 	charLimitCheck.addEventListener('click', charLimitError);
-	excludeSpacesCheck.addEventListener('click', charLimitError);
-	console.log(charLimitCheck.checked);
+	textInput.addEventListener('keyup', updateAllCounters);
+	excludeSpacesCheck.addEventListener('click', updateAllCounters);
+};
+const updateAllCounters = () => {
+	charCounter();
+	wordCounter();
+	sentenceCounter();
+	readingTimeCounter();
+	assignCharCount();
+	assignWordCount();
+	assignSentenceCount();
+	assignReadingTime();
+	charLimitError();
 };
 
 const restoreData = () => {
 	restoreTheme();
-	// restoreCharLimit();
 };
 // utils
 function debounce(fn, delay) {
@@ -67,6 +83,15 @@ function debounce(fn, delay) {
 		timeout = setTimeout(() => fn.apply(this, args), delay);
 	};
 }
+
+function handleKeys(targetKeys, callback) {
+	return function (e) {
+		if (targetKeys.includes(e.key)) {
+			callback();
+		}
+	};
+}
+
 // restore data
 const restoreTheme = () => {
 	if (savedTheme) {
@@ -76,17 +101,6 @@ const restoreTheme = () => {
 	const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 	setTheme(prefersDark ? 'dark' : 'light');
 };
-
-// const restoreCharLimit = () => {
-// 	if (charLimitState === 'true') {
-// 		charLimitCheck.checked = true;
-// 		charLimitInput.classList.remove('main__options-input--hidden');
-// 	} else {
-// 		charLimitCheck.checked = false;
-// 		charLimitInput.classList.add('main__options-input--hidden');
-// 	}
-// 	charLimitInput.value = localStorage.getItem(STORAGE_KEYS.charLimit);
-// };
 
 // header shadow
 const showHeaderShadow = () => {
@@ -111,30 +125,41 @@ const handleThemeBtn = () => {
 const showCharLimit = () => {
 	if (charLimitCheck.checked) {
 		charLimitInput.classList.remove('main__options-input--hidden');
-		localStorage.setItem(STORAGE_KEYS.isCharLimit, 'true');
 	} else {
 		charLimitInput.classList.add('main__options-input--hidden');
-		localStorage.setItem(STORAGE_KEYS.isCharLimit, 'false');
 	}
 };
 
-const getCharLimit = () => {
-	const defaultCharLimit = 300;
-	if (!charLimitInput.value) {
-		localStorage.setItem(STORAGE_KEYS.charLimit, defaultCharLimit);
-	} else {
-		localStorage.setItem(STORAGE_KEYS.charLimit, charLimitInput.value);
-	}
-	console.log(localStorage.getItem(STORAGE_KEYS.charLimit));
-};
+// counters
 
-const charCounter = (input) => {
-	let text = input.value;
+const charCounter = () => {
+	let text = textInput.value.replaceAll('\n', '');
 	if (excludeSpacesCheck.checked) {
 		let trimmedText = text.replaceAll(' ', '');
 		charCount = trimmedText.length;
 	} else {
 		charCount = text.length;
+	}
+};
+
+const wordCounter = () => {
+	let text = textInput.value.replaceAll('\n', ' ');
+	let words = [];
+	words = text.split(' ').filter(Boolean);
+	wordCount = words.length;
+};
+
+const sentenceCounter = () => {
+	let text = textInput.value.trim();
+	let sentences = [];
+	sentences = text.split(/[.!?]/).filter(Boolean);
+	sentenceCount = sentences.length;
+};
+
+const readingTimeCounter = () => {
+	readingTime = Math.round(wordCount / 200);
+	if (readingTime < 1) {
+		readingTime = '<1';
 	}
 };
 const charLimitError = () => {
@@ -154,4 +179,35 @@ const charLimitError = () => {
 	}
 };
 
+const charLimitAutoFill = () => {
+	let value = charLimitInput.value.trim();
+
+	if (value === '') {
+		charLimitInput.value = 300;
+		return;
+	}
+	value = parseInt(value);
+	if (isNaN(value) || value <= 0) {
+		charLimitInput.value = 300;
+	} else {
+		charLimitInput.value = value;
+	}
+};
+// assign box data
+
+const assignCharCount = () => {
+	charCountText.textContent = charCount || 0;
+};
+
+const assignWordCount = () => {
+	wordCountText.textContent = wordCount || 0;
+};
+
+const assignSentenceCount = () => {
+	sentenceCountText.textContent = sentenceCount || 0;
+};
+
+const assignReadingTime = () => {
+	readingTimeText.textContent = readingTime;
+};
 document.addEventListener('DOMContentLoaded', main);
