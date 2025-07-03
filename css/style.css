@@ -145,16 +145,11 @@ body {
 .header {
   position: sticky;
   top: 0;
-  height: 70px;
+  height: 5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   z-index: 15;
-}
-@media (min-width: 768px) {
-  .header {
-    height: 100px;
-  }
 }
 .header--shadow {
   position: fixed;
@@ -372,6 +367,7 @@ body {
   line-height: 130%;
   letter-spacing: -0.6px;
   color: #da3701;
+  transition: opacity 0.3s;
 }
 .main__error-msg .icon {
   width: 1.2em;
@@ -518,17 +514,6 @@ body {
   outline: none;
   border: 2px solid #c27cf8;
   box-shadow: 0px 0px 8px #c27cf8;
-}
-.stats__btn:hover {
-  color: #c27cf8;
-}
-.stats__btn-icon {
-  padding-inline: 6px;
-  vertical-align: middle;
-  transition: transform 0.3s;
-}
-.stats__btn-icon--rotated {
-  transform: rotate(180deg);
 }
 
 .hidden {
