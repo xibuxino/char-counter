@@ -202,7 +202,13 @@ const letterCounter = () => {
 	let resultArray = Object.entries(letterCounts).map(([char, count]) => {
 		return { char, count };
 	});
-	sortedLetterCounts = resultArray.sort((a, b) => b.count - a.count);
+
+	sortedLetterCounts = resultArray.sort((a, b) => {
+		if (b.count !== a.count) {
+			return b.count - a.count;
+		}
+		return a.char.localeCompare(b.char);
+	});
 };
 
 const letterDensity = () => {
