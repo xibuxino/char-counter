@@ -81,6 +81,7 @@ body {
   --input-hover-bg-color: #e4e4ef;
   --input-border: 2px solid #e4e4ef;
   --arrow-icon: url("../img/chevron-down-solid.svg");
+  --bar-bg-color: #f2f2f7;
 }
 .theme-light .icon-sun {
   display: none;
@@ -100,6 +101,7 @@ body {
   --input-hover-bg-color: #2a2b37;
   --input-border: 2px solid #2a2b37;
   --arrow-icon: url("../img/chevron-down-solid-white.svg");
+  --bar-bg-color: #2a2b37;
 }
 .theme-dark .icon-sun {
   display: block;
@@ -479,7 +481,7 @@ body {
 }
 .stats__list-bar {
   height: 12px;
-  background-color: #f2f2f7;
+  background-color: var(--bar-bg-color);
   border-radius: 999px;
   overflow: hidden;
 }

@@ -64,6 +64,7 @@ body {
 	--input-hover-bg-color: #{$neutral-200-color};
 	--input-border: 2px solid #{$neutral-200-color};
 	--arrow-icon: url('../img/chevron-down-solid.svg');
+	--bar-bg-color: #{$neutral-100-color};
 	.icon-sun {
 		display: none;
 	}
@@ -83,6 +84,7 @@ body {
 	--input-hover-bg-color: #{$neutral-700-color};
 	--input-border: 2px solid #{$neutral-700-color};
 	--arrow-icon: url('../img/chevron-down-solid-white.svg');
+	--bar-bg-color: #{$neutral-700-color};
 	.icon-sun {
 		display: block;
 	}
@@ -356,7 +358,7 @@ body {
 		}
 		&-bar {
 			height: 12px;
-			background-color: $neutral-100-color;
+			background-color: var(--bar-bg-color);
 			border-radius: $radius-full;
 			overflow: hidden;
 			&-result {
